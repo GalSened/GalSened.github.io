@@ -1,0 +1,1344 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+<title>Gal Sened — Systems engineer shipping production AI, security & platform at scale</title>
+<meta name="description" content="Gal Sened designs and ships production systems end to end — AI platforms, security scanners, signing infrastructure, developer tooling. Senior-architect thinking, verified in code." />
+<meta name="author" content="Gal Sened" />
+<meta name="color-scheme" content="dark" />
+<meta property="og:title" content="Gal Sened — Systems engineer, security architect, AI practitioner" />
+<meta property="og:description" content="Production AI, security, and platform systems. Built end to end. No mocks. No skipped tests. Verified in code." />
+<meta property="og:type" content="website" />
+<link rel="icon" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='12' fill='%230a0b0d'/><text x='50%25' y='54%25' text-anchor='middle' font-family='Georgia,serif' font-style='italic' font-size='34' fill='%23f59e0b'>gs</text></svg>" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..900,0..100,0..1;1,9..144,300..900,0..100,0..1&family=JetBrains+Mono:ital,wght@0,300..700;1,300..700&family=Geist:wght@300..700&display=swap" rel="stylesheet" />
+
+<style>
+/* =========================================================
+   The Architect's Ledger — Gal Sened portfolio
+   A single-file editorial/technical dark site.
+   Typography: Fraunces (display, italicized editorial),
+               JetBrains Mono (technical precision),
+               Geist (body).
+   ========================================================= */
+
+:root{
+  --bg: #0a0b0d;
+  --bg-grad: radial-gradient(1100px 600px at 82% -10%, rgba(245,158,11,.10), transparent 60%),
+             radial-gradient(900px 700px at -10% 10%, rgba(100,108,255,.08), transparent 55%),
+             #0a0b0d;
+  --surface: #101217;
+  --surface-2: #161a22;
+  --line: #1d2028;
+  --line-strong: #2a2f3a;
+  --ink: #ececea;
+  --ink-dim: #a8abb0;
+  --ink-mute: #5f6168;
+  --gold: #f5b544;
+  --gold-soft: #e9a637;
+  --indigo: #7d84ff;
+  --signal: #b8ff5c;
+  --danger: #ff6161;
+
+  --serif: 'Fraunces', ui-serif, Georgia, 'Times New Roman', serif;
+  --sans:  'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  --mono:  'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --ease: cubic-bezier(.2,.7,.2,1);
+  --col-gap: clamp(14px, 2.2vw, 28px);
+  --pad: clamp(20px, 4vw, 56px);
+  --maxw: 1360px;
+}
+
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{
+  font-family:var(--sans);
+  background:var(--bg-grad);
+  color:var(--ink);
+  line-height:1.55;
+  font-weight:400;
+  letter-spacing:-0.005em;
+  min-height:100vh;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:1;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 .035 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  mix-blend-mode:overlay;
+  opacity:.5;
+}
+
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+
+/* Utility */
+.shell{
+  max-width:var(--maxw);
+  margin-inline:auto;
+  padding-inline:var(--pad);
+  position:relative;
+  z-index:2;
+}
+.rule{height:1px;background:var(--line);width:100%}
+.rule-strong{height:1px;background:var(--line-strong);width:100%}
+.mono{font-family:var(--mono);letter-spacing:.02em}
+.dim{color:var(--ink-dim)}
+.mute{color:var(--ink-mute)}
+.kicker{
+  font-family:var(--mono);
+  font-size:11px;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  color:var(--ink-mute);
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+}
+.kicker::before{
+  content:"";
+  width:22px;height:1px;background:var(--line-strong);
+}
+.serif{font-family:var(--serif);font-style:italic;font-variation-settings:"opsz" 96, "SOFT" 50, "WONK" 1}
+.caps{text-transform:uppercase;letter-spacing:.16em}
+
+/* ==============================
+   Masthead
+   ============================== */
+.masthead{
+  position:sticky;
+  top:0;
+  z-index:50;
+  backdrop-filter:blur(14px) saturate(140%);
+  -webkit-backdrop-filter:blur(14px) saturate(140%);
+  background:linear-gradient(180deg, rgba(10,11,13,.85), rgba(10,11,13,.55));
+  border-bottom:1px solid var(--line);
+}
+.masthead-inner{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:24px;
+  padding-block:14px;
+}
+.mark{
+  display:flex;align-items:center;gap:14px;
+  font-family:var(--mono);
+  font-size:12px;
+  color:var(--ink-dim);
+}
+.monogram{
+  display:inline-grid;place-items:center;
+  width:30px;height:30px;border-radius:8px;
+  border:1px solid var(--line-strong);
+  background:linear-gradient(180deg, rgba(245,181,68,.14), rgba(245,181,68,.02));
+  font-family:var(--serif);font-style:italic;font-weight:500;font-size:18px;
+  color:var(--gold);
+  letter-spacing:-.03em;
+}
+.mark .pipe{color:var(--ink-mute)}
+.mark .name{color:var(--ink)}
+.live{
+  display:inline-flex;align-items:center;gap:8px;
+  color:var(--signal);
+  font-family:var(--mono);font-size:11px;letter-spacing:.12em;
+}
+.live-dot{
+  width:7px;height:7px;border-radius:50%;background:var(--signal);
+  box-shadow:0 0 0 0 rgba(184,255,92,.65);
+  animation:pulse 2s var(--ease) infinite;
+}
+@keyframes pulse{
+  0%{box-shadow:0 0 0 0 rgba(184,255,92,.55)}
+  70%{box-shadow:0 0 0 10px rgba(184,255,92,0)}
+  100%{box-shadow:0 0 0 0 rgba(184,255,92,0)}
+}
+
+.nav{
+  display:flex;align-items:center;gap:28px;
+  font-family:var(--mono);font-size:12px;color:var(--ink-dim);
+}
+.nav a{
+  position:relative;
+  transition:color .3s var(--ease);
+}
+.nav a:hover{color:var(--gold)}
+.nav a::after{
+  content:"";position:absolute;left:0;right:100%;bottom:-6px;height:1px;
+  background:var(--gold);
+  transition:right .4s var(--ease);
+}
+.nav a:hover::after{right:0}
+.nav-right{display:flex;align-items:center;gap:18px}
+.clock{font-family:var(--mono);font-size:11px;color:var(--ink-mute);letter-spacing:.08em}
+@media (max-width:820px){
+  .nav{display:none}
+  .clock{display:none}
+}
+
+/* ==============================
+   Hero
+   ============================== */
+.hero{
+  padding-block: clamp(48px, 8vw, 140px) clamp(56px, 8vw, 120px);
+  position:relative;
+}
+.hero-grid{
+  display:grid;
+  grid-template-columns: 1fr;
+  gap: clamp(40px, 5vw, 80px);
+}
+@media (min-width:1000px){
+  .hero-grid{grid-template-columns: minmax(0, 7fr) minmax(0, 4fr);align-items:start}
+}
+.hero-title{
+  font-family:var(--serif);
+  font-weight:340;
+  font-style:normal;
+  font-variation-settings:"opsz" 144, "SOFT" 60, "WONK" 1;
+  font-size: clamp(44px, 8.2vw, 128px);
+  line-height:0.96;
+  letter-spacing:-0.035em;
+  margin:18px 0 0;
+  color:var(--ink);
+}
+.hero-title em{
+  font-style:italic;
+  color:var(--gold);
+  font-weight:360;
+  font-variation-settings:"opsz" 144, "SOFT" 100, "WONK" 1;
+}
+.hero-title .break{display:block}
+.hero-sub{
+  margin-top: clamp(24px, 3vw, 36px);
+  max-width: 52ch;
+  font-size: clamp(16px, 1.35vw, 19px);
+  line-height:1.55;
+  color:var(--ink-dim);
+}
+.hero-sub strong{color:var(--ink);font-weight:500}
+
+.hero-ctas{
+  display:flex;flex-wrap:wrap;gap:12px;
+  margin-top: clamp(28px, 3vw, 40px);
+}
+.btn{
+  display:inline-flex;align-items:center;gap:10px;
+  padding:13px 18px 13px 20px;
+  border-radius:999px;
+  font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;
+  border:1px solid var(--line-strong);
+  color:var(--ink);
+  background:var(--surface);
+  transition: all .35s var(--ease);
+  position:relative;overflow:hidden;
+}
+.btn:hover{border-color:var(--gold);color:var(--gold);transform:translateY(-1px)}
+.btn.primary{
+  background:linear-gradient(180deg, #f5b544, #d99319);
+  color:#12110a;border-color:transparent;
+  box-shadow:0 10px 28px -12px rgba(245,181,68,.55), inset 0 1px 0 rgba(255,255,255,.3);
+}
+.btn.primary:hover{transform:translateY(-2px);box-shadow:0 16px 30px -12px rgba(245,181,68,.7), inset 0 1px 0 rgba(255,255,255,.4);color:#12110a}
+.btn .arrow{transition:transform .35s var(--ease)}
+.btn:hover .arrow{transform:translate(3px,-3px)}
+
+/* Hero side column: data sheet */
+.datasheet{
+  border:1px solid var(--line);
+  background:linear-gradient(180deg, rgba(22,26,34,.8), rgba(16,18,23,.6));
+  border-radius:14px;
+  padding: 22px 24px;
+  font-family:var(--mono);
+  font-size:12.5px;
+  color:var(--ink-dim);
+  backdrop-filter:blur(8px);
+  position:relative;
+}
+.datasheet::before{
+  content:"DATA SHEET / GS-01";
+  position:absolute;top:-10px;left:18px;
+  background:var(--bg);
+  padding:0 8px;
+  font-size:10px;letter-spacing:.2em;color:var(--ink-mute);
+}
+.ds-row{
+  display:grid;grid-template-columns: 1fr auto;
+  gap:16px;padding-block:10px;
+  border-bottom:1px dashed var(--line);
+}
+.ds-row:last-child{border-bottom:0}
+.ds-row .k{color:var(--ink-mute);text-transform:uppercase;letter-spacing:.12em;font-size:10.5px}
+.ds-row .v{color:var(--ink);text-align:right}
+.ds-row .v.accent{color:var(--gold)}
+.ds-row .v.live{color:var(--signal)}
+
+/* Eyebrow above title */
+.eyebrow{
+  display:flex;align-items:center;gap:18px;
+  font-family:var(--mono);font-size:11.5px;letter-spacing:.18em;
+  color:var(--ink-mute);text-transform:uppercase;
+}
+.eyebrow .dash{flex:0 0 40px;height:1px;background:var(--line-strong)}
+
+/* Hero bottom strip */
+.hero-strip{
+  margin-top: clamp(48px, 6vw, 96px);
+  border-top:1px solid var(--line);
+  border-bottom:1px solid var(--line);
+  padding-block:18px;
+  display:grid;grid-template-columns: repeat(2, 1fr);gap:18px;
+  font-family:var(--mono);font-size:11.5px;color:var(--ink-mute);
+  letter-spacing:.14em;text-transform:uppercase;
+}
+.hero-strip .cell:nth-child(2){text-align:right}
+@media (min-width:820px){
+  .hero-strip{grid-template-columns: repeat(4, 1fr)}
+  .hero-strip .cell:nth-child(2),
+  .hero-strip .cell:nth-child(3),
+  .hero-strip .cell:nth-child(4){text-align:center}
+  .hero-strip .cell:last-child{text-align:right}
+}
+
+/* ==============================
+   Prelude / pull-quote
+   ============================== */
+.prelude{
+  padding-block: clamp(60px, 8vw, 120px);
+}
+.prelude-grid{
+  display:grid;grid-template-columns:1fr;gap:clamp(24px, 4vw, 48px);
+}
+@media (min-width:1000px){
+  .prelude-grid{grid-template-columns: 3fr 7fr}
+}
+.prelude h2{
+  font-family:var(--mono);font-size:12px;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--ink-mute);
+  margin:0;font-weight:400;
+}
+.pullquote{
+  font-family:var(--serif);font-style:italic;font-weight:350;
+  font-variation-settings:"opsz" 96, "SOFT" 80, "WONK" 1;
+  font-size: clamp(26px, 3.2vw, 44px);
+  line-height:1.18;
+  letter-spacing:-0.022em;
+  color:var(--ink);
+  margin:0;
+}
+.pullquote b{color:var(--gold);font-weight:360}
+.pullquote em.is-indigo{color:var(--indigo)}
+.pullquote .roman{font-style:normal;font-family:var(--sans);font-weight:300;font-size:.8em;color:var(--ink-dim);display:block;margin-top:18px;letter-spacing:0}
+
+/* ==============================
+   Ledger (stats)
+   ============================== */
+.ledger{
+  padding-block: clamp(40px, 5vw, 64px);
+  border-top:1px solid var(--line);
+  border-bottom:1px solid var(--line);
+  background:
+    linear-gradient(180deg, rgba(16,18,23,.5), rgba(10,11,13,0));
+}
+.ledger-grid{
+  display:grid;grid-template-columns: repeat(2, 1fr);
+  gap: 0;
+}
+@media (min-width:900px){
+  .ledger-grid{grid-template-columns: repeat(4, 1fr)}
+}
+.stat{
+  padding: 28px 24px;
+  position:relative;
+  border-right:1px dashed var(--line);
+  border-bottom:1px dashed var(--line);
+}
+.stat:last-child,
+.stat:nth-child(2){border-right:0}
+@media (min-width:900px){
+  .stat{border-bottom:0}
+  .stat:last-child{border-right:0}
+  .stat:nth-child(2){border-right:1px dashed var(--line)}
+}
+.stat-n{
+  font-family:var(--serif);font-style:italic;font-weight:320;
+  font-variation-settings:"opsz" 144, "SOFT" 60, "WONK" 1;
+  font-size: clamp(48px, 6vw, 88px);
+  line-height:.95;
+  letter-spacing:-.03em;
+  color:var(--ink);
+  display:flex;align-items:baseline;gap:8px;
+}
+.stat-n sup{
+  font-family:var(--mono);font-size:13px;font-style:normal;
+  color:var(--gold);letter-spacing:0;top:-1.5em;
+}
+.stat-n .plus{color:var(--gold);font-family:var(--sans);font-style:normal;font-weight:300}
+.stat-label{
+  margin-top:14px;
+  font-family:var(--mono);font-size:11px;color:var(--ink-mute);
+  letter-spacing:.14em;text-transform:uppercase;
+  line-height:1.6;
+}
+.stat-label b{color:var(--ink-dim);font-weight:500}
+
+/* ==============================
+   Section headings
+   ============================== */
+.section{
+  padding-block: clamp(60px, 10vw, 140px);
+  position:relative;
+}
+.section-head{
+  display:grid;grid-template-columns:1fr;gap:12px;
+  align-items:end;
+  margin-bottom: clamp(32px, 4vw, 56px);
+}
+@media (min-width:900px){
+  .section-head{grid-template-columns: 1fr auto}
+}
+.section-num{
+  font-family:var(--mono);font-size:12px;letter-spacing:.2em;
+  color:var(--ink-mute);text-transform:uppercase;
+  display:flex;gap:14px;align-items:center;
+}
+.section-num .bar{width:26px;height:1px;background:var(--line-strong)}
+.section-title{
+  margin:6px 0 0;
+  font-family:var(--serif);font-weight:340;font-style:normal;
+  font-variation-settings:"opsz" 144, "SOFT" 60, "WONK" 1;
+  font-size: clamp(36px, 4.6vw, 64px);
+  letter-spacing:-.028em;
+  line-height:1.02;
+}
+.section-title em{font-style:italic;color:var(--gold);font-weight:360}
+.section-sub{
+  font-family:var(--mono);font-size:12px;color:var(--ink-mute);
+  text-transform:uppercase;letter-spacing:.14em;
+}
+
+/* ==============================
+   Capabilities matrix
+   ============================== */
+.cap-grid{
+  display:grid;grid-template-columns: 1fr;gap:1px;
+  background:var(--line);
+  border:1px solid var(--line);
+  border-radius:10px;
+  overflow:hidden;
+}
+@media (min-width:720px){.cap-grid{grid-template-columns:1fr 1fr}}
+@media (min-width:1080px){.cap-grid{grid-template-columns:1fr 1fr 1fr}}
+.cap{
+  background:var(--surface);
+  padding: 30px 28px 34px;
+  display:flex;flex-direction:column;gap:14px;
+  transition: background .4s var(--ease), transform .4s var(--ease);
+  position:relative;
+}
+.cap:hover{background:var(--surface-2)}
+.cap-head{
+  display:flex;align-items:center;justify-content:space-between;gap:14px;
+}
+.cap-n{
+  font-family:var(--mono);font-size:11px;color:var(--ink-mute);letter-spacing:.2em;
+}
+.cap-tag{
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;
+  color:var(--gold);text-transform:uppercase;
+  border:1px solid rgba(245,181,68,.3);
+  padding:3px 8px;border-radius:999px;
+}
+.cap-name{
+  font-family:var(--serif);font-weight:360;
+  font-size: clamp(22px, 2vw, 28px);
+  line-height:1.08;letter-spacing:-.015em;
+  color:var(--ink);margin:0;
+}
+.cap-name em{font-style:italic;color:var(--gold)}
+.cap-copy{
+  font-size:14.5px;line-height:1.6;color:var(--ink-dim);margin:0;
+}
+.cap-list{
+  list-style:none;padding:0;margin:6px 0 0;
+  display:flex;flex-wrap:wrap;gap:6px;
+}
+.cap-list li{
+  font-family:var(--mono);font-size:10.5px;
+  color:var(--ink-dim);border:1px solid var(--line-strong);
+  padding:4px 9px;border-radius:999px;letter-spacing:.04em;
+}
+
+/* ==============================
+   Work list (selected projects)
+   ============================== */
+.work{display:flex;flex-direction:column}
+.work-item{
+  display:grid;grid-template-columns:1fr;gap:18px;
+  padding-block: 28px;
+  border-top:1px solid var(--line);
+  transition: background .5s var(--ease), padding .5s var(--ease);
+  position:relative;
+}
+.work-item:last-child{border-bottom:1px solid var(--line)}
+.work-item:hover{background:rgba(22,26,34,.45)}
+.work-item:hover .work-title em{letter-spacing:-.004em}
+.work-item:hover .work-arrow{transform: translate(6px, -6px);color:var(--gold)}
+
+@media (min-width:900px){
+  .work-item{
+    grid-template-columns: 60px minmax(0,3.2fr) minmax(0,4fr) auto;
+    align-items:baseline;
+    padding-block: 30px;
+  }
+}
+.work-n{
+  font-family:var(--mono);font-size:13px;color:var(--gold);letter-spacing:.08em;
+  padding-top:4px;
+}
+.work-title{
+  font-family:var(--serif);font-weight:340;font-style:normal;
+  font-variation-settings:"opsz" 144, "SOFT" 60, "WONK" 1;
+  font-size: clamp(26px, 2.6vw, 40px);
+  line-height:1.05;letter-spacing:-.02em;
+  margin:0;
+  color:var(--ink);
+}
+.work-title em{
+  font-style:italic;color:var(--gold);
+  transition: letter-spacing .5s var(--ease);
+}
+.work-meta{
+  display:flex;flex-direction:column;gap:12px;
+}
+.work-copy{
+  font-size:15.5px;line-height:1.58;color:var(--ink-dim);margin:0;max-width:52ch;
+}
+.work-stack{
+  display:flex;flex-wrap:wrap;gap:6px;
+}
+.work-stack span{
+  font-family:var(--mono);font-size:10.5px;
+  color:var(--ink-mute);border:1px solid var(--line);
+  padding:3px 8px;border-radius:999px;letter-spacing:.04em;
+  background: rgba(22,26,34,.5);
+}
+.work-side{
+  display:flex;flex-direction:column;align-items:flex-start;gap:10px;
+  font-family:var(--mono);font-size:11px;color:var(--ink-mute);
+  letter-spacing:.14em;text-transform:uppercase;
+}
+@media (min-width:900px){
+  .work-side{align-items:flex-end;text-align:right}
+}
+.status{
+  display:inline-flex;align-items:center;gap:6px;
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;
+  padding:4px 10px;border-radius:999px;
+  border:1px solid var(--line-strong);
+  color:var(--ink-dim);
+  text-transform:uppercase;
+}
+.status::before{
+  content:"";width:6px;height:6px;border-radius:50%;background:var(--ink-mute);
+}
+.status.live{color:var(--signal);border-color:rgba(184,255,92,.35)}
+.status.live::before{background:var(--signal);box-shadow:0 0 10px rgba(184,255,92,.8)}
+.status.ship{color:var(--gold);border-color:rgba(245,181,68,.35)}
+.status.ship::before{background:var(--gold)}
+.status.active{color:var(--indigo);border-color:rgba(125,132,255,.35)}
+.status.active::before{background:var(--indigo)}
+
+.work-arrow{
+  font-family:var(--mono);font-size:14px;color:var(--ink-mute);
+  transition: transform .45s var(--ease), color .45s var(--ease);
+}
+
+/* ==============================
+   Method — principles
+   ============================== */
+.method-grid{
+  display:grid;grid-template-columns:1fr;gap:0;
+  border:1px solid var(--line);border-radius:12px;overflow:hidden;
+}
+@media (min-width:820px){.method-grid{grid-template-columns:1fr 1fr}}
+.method{
+  padding:30px 28px;
+  border-bottom:1px solid var(--line);
+  border-right:1px solid var(--line);
+  background:var(--surface);
+  transition:background .4s var(--ease);
+  display:flex;flex-direction:column;gap:14px;
+}
+@media (min-width:820px){
+  .method:nth-child(2n){border-right:0}
+  .method:nth-last-child(-n+2){border-bottom:0}
+}
+.method:last-child{border-bottom:0;border-right:0}
+.method:hover{background:var(--surface-2)}
+.method-head{
+  display:flex;align-items:baseline;gap:12px;
+  font-family:var(--mono);font-size:11px;color:var(--ink-mute);
+  letter-spacing:.18em;text-transform:uppercase;
+}
+.method-head b{color:var(--gold);font-weight:500;font-size:12.5px}
+.method-title{
+  font-family:var(--serif);font-weight:360;font-style:italic;
+  font-variation-settings:"opsz" 96, "SOFT" 100, "WONK" 1;
+  font-size: clamp(24px, 2vw, 32px);
+  line-height:1.12;letter-spacing:-.015em;margin:0;
+}
+.method-copy{
+  font-size:14.5px;line-height:1.62;color:var(--ink-dim);margin:0;
+}
+
+/* ==============================
+   Stack — tech surface
+   ============================== */
+.stack-surface{
+  display:grid;grid-template-columns:1fr;gap:0;
+  border:1px solid var(--line);border-radius:12px;overflow:hidden;
+  background:var(--surface);
+}
+@media (min-width:900px){.stack-surface{grid-template-columns:repeat(3,1fr)}}
+.stack-col{
+  padding:30px 28px;
+  border-bottom:1px solid var(--line);
+  border-right:1px solid var(--line);
+  display:flex;flex-direction:column;gap:16px;
+  position:relative;
+}
+@media (min-width:900px){
+  .stack-col:nth-child(3n){border-right:0}
+  .stack-col:nth-last-child(-n+3){border-bottom:0}
+}
+.stack-col h4{
+  margin:0;
+  font-family:var(--mono);font-size:11.5px;color:var(--gold);
+  letter-spacing:.18em;text-transform:uppercase;font-weight:500;
+}
+.stack-list{
+  display:flex;flex-wrap:wrap;gap:8px 10px;
+  font-family:var(--mono);font-size:13px;color:var(--ink-dim);
+  line-height:1.55;
+}
+.stack-list span{
+  border-bottom:1px dashed rgba(168,171,176,.25);
+  padding:0 2px 2px;
+}
+
+/* ==============================
+   Why hire — closer
+   ============================== */
+.hire{
+  position:relative;
+  padding: clamp(52px, 7vw, 96px);
+  border:1px solid var(--line-strong);
+  border-radius:16px;
+  background:
+    radial-gradient(900px 400px at 10% -20%, rgba(245,181,68,.13), transparent 60%),
+    radial-gradient(700px 400px at 110% 120%, rgba(125,132,255,.12), transparent 60%),
+    linear-gradient(180deg, var(--surface-2), var(--surface));
+  overflow:hidden;
+}
+.hire-head{
+  font-family:var(--mono);font-size:12px;color:var(--ink-mute);
+  letter-spacing:.2em;text-transform:uppercase;
+}
+.hire-title{
+  font-family:var(--serif);font-weight:340;
+  font-variation-settings:"opsz" 144, "SOFT" 60, "WONK" 1;
+  font-size: clamp(32px, 4vw, 56px);
+  line-height:1.04;letter-spacing:-.028em;
+  margin: 14px 0 28px;color:var(--ink);
+}
+.hire-title em{font-style:italic;color:var(--gold)}
+.hire-list{
+  display:grid;grid-template-columns:1fr;gap:14px;margin:0;padding:0;list-style:none;
+}
+@media (min-width:820px){.hire-list{grid-template-columns:1fr 1fr}}
+.hire-list li{
+  display:grid;grid-template-columns:28px 1fr;gap:14px;
+  padding:16px 0;
+  border-top:1px dashed var(--line-strong);
+  font-size:15px;line-height:1.55;color:var(--ink-dim);
+}
+.hire-list li b{color:var(--ink);font-weight:500}
+.hire-list li:nth-child(1),.hire-list li:nth-child(2){border-top:0}
+@media (max-width:820px){.hire-list li:nth-child(2){border-top:1px dashed var(--line-strong)}}
+.hire-list .num{
+  font-family:var(--mono);font-size:11px;color:var(--gold);letter-spacing:.1em;
+  padding-top:2px;
+}
+
+/* ==============================
+   Contact
+   ============================== */
+.close{
+  padding-block: clamp(80px, 12vw, 180px) clamp(40px, 6vw, 80px);
+  text-align:center;position:relative;
+}
+.close-kicker{
+  font-family:var(--mono);font-size:12px;color:var(--ink-mute);
+  letter-spacing:.22em;text-transform:uppercase;
+  display:inline-flex;align-items:center;gap:14px;
+}
+.close-kicker::before,
+.close-kicker::after{
+  content:"";width:40px;height:1px;background:var(--line-strong);
+}
+.close-title{
+  font-family:var(--serif);font-weight:320;
+  font-variation-settings:"opsz" 144, "SOFT" 80, "WONK" 1;
+  font-size: clamp(54px, 9vw, 156px);
+  line-height:.94;letter-spacing:-.04em;
+  margin: 26px 0 18px;
+}
+.close-title em{font-style:italic;color:var(--gold)}
+.close-sub{
+  max-width:54ch;margin:0 auto;
+  color:var(--ink-dim);font-size:16px;line-height:1.6;
+}
+.close-ctas{
+  margin-top:42px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap;
+}
+.contact-row{
+  margin-top:56px;
+  display:grid;grid-template-columns:1fr;gap:18px;
+  font-family:var(--mono);font-size:12.5px;color:var(--ink-dim);
+  letter-spacing:.06em;
+}
+@media (min-width:820px){.contact-row{grid-template-columns:repeat(3,1fr)}}
+.contact-row a{
+  display:flex;align-items:center;justify-content:center;gap:10px;
+  border:1px solid var(--line);background:var(--surface);
+  padding:16px 18px;border-radius:999px;
+  transition: all .4s var(--ease);
+}
+.contact-row a:hover{border-color:var(--gold);color:var(--gold);transform:translateY(-1px)}
+.contact-row .lbl{color:var(--ink-mute);text-transform:uppercase;letter-spacing:.14em;font-size:10.5px}
+
+/* Footer */
+.foot{
+  border-top:1px solid var(--line);
+  padding-block:24px;
+  display:grid;grid-template-columns:1fr;gap:12px;
+  font-family:var(--mono);font-size:11px;color:var(--ink-mute);
+  letter-spacing:.14em;text-transform:uppercase;
+}
+@media (min-width:820px){
+  .foot{grid-template-columns:1fr 1fr 1fr;align-items:center}
+  .foot .mid{text-align:center}
+  .foot .end{text-align:right}
+}
+
+/* ==============================
+   Scroll reveal
+   ============================== */
+.reveal{
+  opacity:0;transform:translateY(14px);
+  transition: opacity .9s var(--ease), transform .9s var(--ease);
+  will-change: opacity, transform;
+}
+.reveal.in{opacity:1;transform:translateY(0)}
+
+@media (prefers-reduced-motion: reduce){
+  .reveal{opacity:1;transform:none;transition:none}
+  .live-dot{animation:none}
+}
+
+/* Selection */
+::selection{background:rgba(245,181,68,.35);color:#fff}
+
+</style>
+</head>
+<body>
+
+<!-- =========================
+     MASTHEAD
+     ========================= -->
+<header class="masthead">
+  <div class="shell masthead-inner">
+    <div class="mark">
+      <span class="monogram">gs</span>
+      <span class="name">Gal Sened</span>
+      <span class="pipe">/</span>
+      <span>Engineering Portfolio · MMXXVI</span>
+    </div>
+    <div class="nav-right">
+      <nav class="nav" aria-label="Primary">
+        <a href="#work">Work</a>
+        <a href="#capabilities">Capabilities</a>
+        <a href="#method">Method</a>
+        <a href="#stack">Stack</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <span class="clock" id="clock" aria-hidden="true">—</span>
+      <span class="live" title="Systems online"><span class="live-dot"></span>Shipping</span>
+    </div>
+  </div>
+</header>
+
+<!-- =========================
+     HERO
+     ========================= -->
+<section class="hero">
+  <div class="shell">
+    <div class="hero-grid">
+      <div>
+        <div class="eyebrow reveal"><span class="dash"></span><span>Ch. 01 — Statement</span></div>
+
+        <h1 class="hero-title reveal">
+          <span class="break">Systems that</span>
+          <span class="break"><em>survive</em> production,</span>
+          <span class="break">not slideshows.</span>
+        </h1>
+
+        <p class="hero-sub reveal">
+          I'm <strong>Gal Sened</strong> — a senior engineer who designs, builds and operates real systems end to end:
+          <strong>AI platforms</strong>, <strong>security scanners</strong>, <strong>signing infrastructure</strong>, and the
+          <strong>developer tooling</strong> that keeps them honest. Architecture to code to infra to docs — one person,
+          many ships, zero mocks.
+        </p>
+
+        <div class="hero-ctas reveal">
+          <a class="btn primary" href="#work">
+            Browse the ledger
+            <span class="arrow">↗</span>
+          </a>
+          <a class="btn" href="#contact">
+            Hire for real work
+            <span class="arrow">→</span>
+          </a>
+        </div>
+      </div>
+
+      <aside class="datasheet reveal" aria-label="Fact sheet">
+        <div class="ds-row"><span class="k">Role</span><span class="v">Senior Systems Engineer</span></div>
+        <div class="ds-row"><span class="k">Based</span><span class="v">Israel · remote-first</span></div>
+        <div class="ds-row"><span class="k">Languages</span><span class="v">English · עברית</span></div>
+        <div class="ds-row"><span class="k">Domains</span><span class="v accent">AI · Security · Signing</span></div>
+        <div class="ds-row"><span class="k">Stack surface</span><span class="v">.NET · Python · TS · K3s</span></div>
+        <div class="ds-row"><span class="k">Signature</span><span class="v">End-to-end, no hand-offs</span></div>
+        <div class="ds-row"><span class="k">Status</span><span class="v live">Available for senior / lead roles</span></div>
+      </aside>
+    </div>
+
+    <div class="hero-strip reveal">
+      <span class="cell">§ 2026 Portfolio</span>
+      <span class="cell">Composed in Israel</span>
+      <span class="cell">Verified in production</span>
+      <span class="cell">Updated 17 Apr 2026</span>
+    </div>
+  </div>
+</section>
+
+<!-- =========================
+     PRELUDE (pull-quote)
+     ========================= -->
+<section class="prelude">
+  <div class="shell prelude-grid">
+    <div class="reveal">
+      <h2>Prelude</h2>
+      <p class="mono dim" style="margin-top:10px;font-size:12px;letter-spacing:.14em;text-transform:uppercase">
+        On what a senior engineer <br/>actually delivers.
+      </p>
+    </div>
+    <blockquote class="pullquote reveal">
+      A senior engineer isn't someone who writes more code.
+      It's someone who <b>owns the whole arc</b> —
+      from the architecture diagram to the failing prod alert at 03:00 —
+      and <b>returns with a shipped, verified fix</b>, not a slide deck.
+      <span class="roman">— that's the job. that's what I do.</span>
+    </blockquote>
+  </div>
+</section>
+
+<!-- =========================
+     LEDGER (stats)
+     ========================= -->
+<section class="ledger" aria-label="By the numbers">
+  <div class="shell">
+    <div class="kicker reveal" style="margin-bottom:28px">By the Ledger</div>
+    <div class="ledger-grid">
+      <div class="stat reveal">
+        <div class="stat-n">60<span class="plus">+</span></div>
+        <div class="stat-label"><b>Repositories</b> shipped across<br/>AI, security, signing, infra</div>
+      </div>
+      <div class="stat reveal">
+        <div class="stat-n">20<span class="plus">+</span></div>
+        <div class="stat-label"><b>Production systems</b> in the field<br/>at an enterprise PKI company</div>
+      </div>
+      <div class="stat reveal">
+        <div class="stat-n">8<span class="plus">+</span></div>
+        <div class="stat-label"><b>Claude Code plugins</b><br/>skills, hooks, agents, MCP servers</div>
+      </div>
+      <div class="stat reveal">
+        <div class="stat-n">149</div>
+        <div class="stat-label"><b>Lessons catalogued</b> in a<br/>personal engineering memory bank</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =========================
+     CAPABILITIES
+     ========================= -->
+<section class="section" id="capabilities">
+  <div class="shell">
+    <div class="section-head">
+      <div>
+        <div class="section-num reveal"><span class="bar"></span>Ch. 02 · Capabilities</div>
+        <h2 class="section-title reveal">Six surfaces I build on <em>in production</em>.</h2>
+      </div>
+      <div class="section-sub reveal">All six, same hands</div>
+    </div>
+
+    <div class="cap-grid reveal">
+      <article class="cap">
+        <div class="cap-head"><span class="cap-n">01</span><span class="cap-tag">Depth</span></div>
+        <h3 class="cap-name">AI engineering that <em>earns</em> its tokens.</h3>
+        <p class="cap-copy">Multi-agent systems, MCP servers, prompt caching, compliant subscription integration via subprocess patterns. I build with the Claude API and Anthropic SDK the way senior backend engineers build with Postgres — measured, cached, observable, cost-aware.</p>
+        <ul class="cap-list"><li>Claude API</li><li>MCP</li><li>Prompt caching</li><li>Multi-agent</li><li>RAG</li><li>Tool use</li></ul>
+      </article>
+
+      <article class="cap">
+        <div class="cap-head"><span class="cap-n">02</span><span class="cap-tag">Depth</span></div>
+        <h3 class="cap-name">Security that <em>actually finds</em> things.</h3>
+        <p class="cap-copy">Designed and shipped a multi-engine scanner orchestrating SAST, DAST, SBOM, IaC and pentest flows with AI-driven triage. Real ZAP findings with evidence, not dashboards full of noise. Fails loud — never <code>except: pass</code>.</p>
+        <ul class="cap-list"><li>SAST</li><li>DAST</li><li>SBOM</li><li>IaC scan</li><li>Pentest orch.</li><li>AI triage</li></ul>
+      </article>
+
+      <article class="cap">
+        <div class="cap-head"><span class="cap-n">03</span><span class="cap-tag">Breadth</span></div>
+        <h3 class="cap-name">Full-stack, from <em>bits to browsers</em>.</h3>
+        <p class="cap-copy">.NET/C# services, Python platforms, TypeScript/React apps, Astro sites with Pagefind, Angular in protected repos. UI that ships — not theatre. I've written production in every layer because every layer talks to the one above and below it.</p>
+        <ul class="cap-list"><li>.NET / C#</li><li>Python</li><li>TypeScript</li><li>React</li><li>Astro</li><li>Angular</li></ul>
+      </article>
+
+      <article class="cap">
+        <div class="cap-head"><span class="cap-n">04</span><span class="cap-tag">Ops</span></div>
+        <h3 class="cap-name">Platform & infra that <em>doesn't wake you</em>.</h3>
+        <p class="cap-copy">K3s and Kubernetes workloads, Docker everywhere, Postgres + pgvector, AWS (EC2, RDS, SSM, ACI), GitHub Actions CI/CD across 10+ repos. I built my own Ops Control Plane — the same rigor travels to your team.</p>
+        <ul class="cap-list"><li>K3s · K8s</li><li>Docker</li><li>Postgres</li><li>pgvector</li><li>AWS</li><li>GH Actions</li></ul>
+      </article>
+
+      <article class="cap">
+        <div class="cap-head"><span class="cap-n">05</span><span class="cap-tag">Domain</span></div>
+        <h3 class="cap-name">Signing & PKI — <em>years-deep</em>.</h3>
+        <p class="cap-copy">Working inside ComsignTrust's digital signing stack: Core API, Certificate Manager, WCF signing paths, HSM integration, WeSign microservices on K3s. When your product touches signatures, regulation, or trust chains — I've been there.</p>
+        <ul class="cap-list"><li>PKI</li><li>HSM</li><li>XAdES / PAdES</li><li>Certificate mgmt</li><li>SOAP / REST</li></ul>
+      </article>
+
+      <article class="cap">
+        <div class="cap-head"><span class="cap-n">06</span><span class="cap-tag">Meta</span></div>
+        <h3 class="cap-name">Tooling the way <em>blacksmiths</em> do.</h3>
+        <p class="cap-copy">Custom Claude Code plugins, skills, hooks and agents — because the tools I ship to myself are tools I'd ship to a team. If your engineers spend time on toil, I find the right place to put a hook, a skill, or a subagent and remove it.</p>
+        <ul class="cap-list"><li>Claude Code plugins</li><li>Agent SDK</li><li>Skills</li><li>Hooks</li><li>MCP servers</li></ul>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- =========================
+     SELECTED WORK
+     ========================= -->
+<section class="section" id="work">
+  <div class="shell">
+    <div class="section-head">
+      <div>
+        <div class="section-num reveal"><span class="bar"></span>Ch. 03 · Selected Work</div>
+        <h2 class="section-title reveal">Eight entries from the <em>shipping log</em>.</h2>
+      </div>
+      <div class="section-sub reveal">2024 — 2026</div>
+    </div>
+
+    <div class="work reveal">
+
+      <article class="work-item">
+        <div class="work-n">01 / 08</div>
+        <div>
+          <h3 class="work-title"><em>Security Scanner</em> V2</h3>
+          <div class="work-side" style="margin-top:12px">
+            <span class="mono mute">Security · AI orchestration</span>
+          </div>
+        </div>
+        <div class="work-meta">
+          <p class="work-copy">A multi-engine enterprise scanner that orchestrates SAST, DAST, SBOM, IaC and pentest flows, feeds findings into AI-driven triage, and publishes evidence-backed reports. Runs on a dedicated Comda Max Claude subscription with OAuth compliance. Ships coverage-gap logs instead of silent failures.</p>
+          <div class="work-stack"><span>Python</span><span>Docker</span><span>ZAP</span><span>Nuclei</span><span>Claude API</span><span>GitHub Actions</span></div>
+        </div>
+        <div class="work-side">
+          <span class="status live">Live · V2</span>
+          <span class="work-arrow" aria-hidden="true">↗</span>
+        </div>
+      </article>
+
+      <article class="work-item">
+        <div class="work-n">02 / 08</div>
+        <div>
+          <h3 class="work-title"><em>Command Center</em></h3>
+          <div class="work-side" style="margin-top:12px">
+            <span class="mono mute">Ops control plane · pgvector</span>
+          </div>
+        </div>
+        <div class="work-meta">
+          <p class="work-copy">A personal operations control plane. Postgres + pgvector back an operator dashboard that replaces a drawer of dotfiles with a real system — tasks, state, semantic search over memory, live telemetry. Milestone 7.5 shipped. The rigor I apply to company systems, applied to myself first.</p>
+          <div class="work-stack"><span>Python</span><span>Postgres</span><span>pgvector</span><span>FastAPI</span><span>Port 8501</span></div>
+        </div>
+        <div class="work-side">
+          <span class="status live">Live · M7.5</span>
+          <span class="work-arrow" aria-hidden="true">↗</span>
+        </div>
+      </article>
+
+      <article class="work-item">
+        <div class="work-n">03 / 08</div>
+        <div>
+          <h3 class="work-title"><em>Comda Docs</em> Portal</h3>
+          <div class="work-side" style="margin-top:12px">
+            <span class="mono mute">Bilingual Astro platform</span>
+          </div>
+        </div>
+        <div class="work-meta">
+          <p class="work-copy">Premium bilingual (EN/HE) documentation platform built on Astro with Pagefind search, a diagram-first writing contract, and a hub architecture. V2 shipped after migrating from V1 Orama. Backed by an upstream-verified accuracy process that closed nine unverifiable claims in one phase.</p>
+          <div class="work-stack"><span>Astro</span><span>Pagefind</span><span>TypeScript</span><span>MDX</span><span>SVG diagrams</span></div>
+        </div>
+        <div class="work-side">
+          <span class="status ship">Shipping</span>
+          <span class="work-arrow" aria-hidden="true">↗</span>
+        </div>
+      </article>
+
+      <article class="work-item">
+        <div class="work-n">04 / 08</div>
+        <div>
+          <h3 class="work-title"><em>Comda Analytics</em></h3>
+          <div class="work-side" style="margin-top:12px">
+            <span class="mono mute">AI-powered analytics · scheduled alerting</span>
+          </div>
+        </div>
+        <div class="work-meta">
+          <p class="work-copy">Full-stack analytics platform with AI insight generation routed through a <code>claude&nbsp;--print</code> subprocess pipeline to stay compliant with the 2026 Anthropic third-party-tool policy for subscription accounts. Scheduled alerting fires overnight, writing insights end-to-end with zero intervention.</p>
+          <div class="work-stack"><span>Python</span><span>Next.js</span><span>Claude subprocess</span><span>Postgres</span><span>Docker</span></div>
+        </div>
+        <div class="work-side">
+          <span class="status live">Live</span>
+          <span class="work-arrow" aria-hidden="true">↗</span>
+        </div>
+      </article>
+
+      <article class="work-item">
+        <div class="work-n">05 / 08</div>
+        <div>
+          <h3 class="work-title"><em>WeSign</em> / ComsignTrust Platform</h3>
+          <div class="work-side" style="margin-top:12px">
+            <span class="mono mute">Digital signing microservices · K3s</span>
+          </div>
+        </div>
+        <div class="work-meta">
+          <p class="work-copy">Contributed across an enterprise digital signing platform: CI/CD hardening, rollback removal, FS migration planning for 1.9M files at production scale, CCMS provisioning via a Claude-powered IaC Runner, and infra work across Core API, Certificate Manager and HSM integrations.</p>
+          <div class="work-stack"><span>.NET</span><span>K3s</span><span>HSM</span><span>GitHub Actions</span><span>Terraform</span></div>
+        </div>
+        <div class="work-side">
+          <span class="status live">Live · Prod</span>
+          <span class="work-arrow" aria-hidden="true">↗</span>
+        </div>
+      </article>
+
+      <article class="work-item">
+        <div class="work-n">06 / 08</div>
+        <div>
+          <h3 class="work-title"><em>TestOps</em> Runner</h3>
+          <div class="work-side" style="margin-top:12px">
+            <span class="mono mute">API + E2E test runner · MCP-native</span>
+          </div>
+        </div>
+        <div class="work-meta">
+          <p class="work-copy">A Postman-shaped test runner that discovered 2,441 real API tests and 356 Playwright E2E tests across three suites on first wiring. Ten MCP tools, WebSocket sync, headed+slow-mo browser controls, screenshot and trace evidence. Two modules delivered behind three independent reviews.</p>
+          <div class="work-stack"><span>TypeScript</span><span>Playwright</span><span>MCP</span><span>WebSocket</span><span>Python</span></div>
+        </div>
+        <div class="work-side">
+          <span class="status ship">Shipping · M2</span>
+          <span class="work-arrow" aria-hidden="true">↗</span>
+        </div>
+      </article>
+
+      <article class="work-item">
+        <div class="work-n">07 / 08</div>
+        <div>
+          <h3 class="work-title"><em>Claude Code</em> Tutoring</h3>
+          <div class="work-side" style="margin-top:12px">
+            <span class="mono mute">Private 1-on-1 training service</span>
+          </div>
+        </div>
+        <div class="work-meta">
+          <p class="work-copy">A per-hour private training service for engineers serious about Claude Code. Custom brand, production landing page with a Kling-generated hero video, Formsubmit intake, Vercel deploy. Tagline: <em>as strong as you think</em> — a double meaning for Claude, and for the student.</p>
+          <div class="work-stack"><span>Vite</span><span>Vanilla JS</span><span>GSAP</span><span>Vercel</span><span>Kling 3.0</span></div>
+        </div>
+        <div class="work-side">
+          <span class="status live">Live</span>
+          <a class="work-arrow" href="https://galsened.github.io/claude-code-tutoring/" target="_blank" rel="noopener" aria-label="Open tutoring site">↗</a>
+        </div>
+      </article>
+
+      <article class="work-item">
+        <div class="work-n">08 / 08</div>
+        <div>
+          <h3 class="work-title"><em>RoamWise</em></h3>
+          <div class="work-side" style="margin-top:12px">
+            <span class="mono mute">AI travel companion · PWA</span>
+          </div>
+        </div>
+        <div class="work-meta">
+          <p class="work-copy">A consumer-grade, weather-aware travel PWA with voice AI, route planning and local discovery. Unified monorepo across mobile, frontend, backend and proxy tiers — the full stack, the full experience, one owner.</p>
+          <div class="work-stack"><span>Next.js</span><span>TypeScript</span><span>PWA</span><span>Node</span><span>Weather API</span></div>
+        </div>
+        <div class="work-side">
+          <span class="status active">Personal</span>
+          <span class="work-arrow" aria-hidden="true">↗</span>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- =========================
+     METHOD
+     ========================= -->
+<section class="section" id="method">
+  <div class="shell">
+    <div class="section-head">
+      <div>
+        <div class="section-num reveal"><span class="bar"></span>Ch. 04 · Method</div>
+        <h2 class="section-title reveal">Five rules I <em>actually</em> enforce.</h2>
+      </div>
+      <div class="section-sub reveal">Working principles, not slogans</div>
+    </div>
+
+    <div class="method-grid reveal">
+      <article class="method">
+        <div class="method-head"><b>RULE I</b><span>· senior-architect first</span></div>
+        <h3 class="method-title">Plan at the architecture level before writing a line.</h3>
+        <p class="method-copy">The first deliverable on any non-trivial task is a diagram and a build sequence — not a pull request. Code is the cheapest part; the expensive part is reversing a wrong blueprint six weeks in.</p>
+      </article>
+
+      <article class="method">
+        <div class="method-head"><b>RULE II</b><span>· real only</span></div>
+        <h3 class="method-title">Never mock. Always hit the real service.</h3>
+        <p class="method-copy">Mocks lie. A test that passes against a mock and fails against production is worse than no test. I wire against real APIs, real databases, real messaging — and I verify via MCP browser tools before declaring done.</p>
+      </article>
+
+      <article class="method">
+        <div class="method-head"><b>RULE III</b><span>· fail loud</span></div>
+        <h3 class="method-title">Silence ships false negatives to customers.</h3>
+        <p class="method-copy">No <code>except: pass</code>. No swallowed return-empty-list. Every suppressed error either raises, writes to <code>result.error</code>, or logs a <span class="mono">WARNING "COVERAGE GAP"</span>. Users deserve to know what's missing, not what's convenient.</p>
+      </article>
+
+      <article class="method">
+        <div class="method-head"><b>RULE IV</b><span>· pass, fail, or delete</span></div>
+        <h3 class="method-title">A skipped test is a lie in the CI dashboard.</h3>
+        <p class="method-copy">Zero tolerance for <code>skip</code>, <code>xfail</code>, or "temporarily disabled". A test either passes, fails and gets fixed, or gets deleted. Green should mean green — anything else is trust debt compounding silently.</p>
+      </article>
+
+      <article class="method">
+        <div class="method-head"><b>RULE V</b><span>· evidence before assertion</span></div>
+        <h3 class="method-title">"Done" is a claim. Claims require proof.</h3>
+        <p class="method-copy">I don't say "it works" — I run the command, read the output, screenshot the UI, and paste the evidence. Verification before completion is an iron law: green logs and a live URL, or the work isn't finished.</p>
+      </article>
+
+      <article class="method">
+        <div class="method-head"><b>RULE VI</b><span>· own the full arc</span></div>
+        <h3 class="method-title">Architecture → code → infra → docs → on-call.</h3>
+        <p class="method-copy">I don't throw work over a wall. If I shipped it, I can diagram it, deploy it, debug it at 03:00, and write the documentation a new hire can read on day one. That's what senior actually means.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- =========================
+     STACK
+     ========================= -->
+<section class="section" id="stack">
+  <div class="shell">
+    <div class="section-head">
+      <div>
+        <div class="section-num reveal"><span class="bar"></span>Ch. 05 · Stack Surface</div>
+        <h2 class="section-title reveal">The <em>technical surface</em> I work on.</h2>
+      </div>
+      <div class="section-sub reveal">Production only · no hobby items</div>
+    </div>
+
+    <div class="stack-surface reveal">
+      <div class="stack-col">
+        <h4>Languages</h4>
+        <div class="stack-list">
+          <span>C# / .NET</span><span>Python</span><span>TypeScript</span><span>JavaScript</span><span>SQL</span><span>Bash</span><span>PowerShell</span>
+        </div>
+      </div>
+      <div class="stack-col">
+        <h4>Web & Product</h4>
+        <div class="stack-list">
+          <span>React</span><span>Next.js</span><span>Astro</span><span>Angular</span><span>Vite</span><span>Tailwind</span><span>GSAP</span><span>Playwright</span>
+        </div>
+      </div>
+      <div class="stack-col">
+        <h4>Platform & Infra</h4>
+        <div class="stack-list">
+          <span>Docker</span><span>K3s · K8s</span><span>AWS (EC2, RDS, SSM)</span><span>Postgres</span><span>pgvector</span><span>GitHub Actions</span><span>Terraform</span><span>Nginx</span>
+        </div>
+      </div>
+      <div class="stack-col">
+        <h4>AI & Agents</h4>
+        <div class="stack-list">
+          <span>Claude API</span><span>Anthropic SDK</span><span>MCP servers</span><span>Prompt caching</span><span>Multi-agent orchestration</span><span>Claude Code plugins</span><span>Agent SDK</span>
+        </div>
+      </div>
+      <div class="stack-col">
+        <h4>Security & Signing</h4>
+        <div class="stack-list">
+          <span>SAST / DAST</span><span>SBOM</span><span>IaC scan</span><span>ZAP · Nuclei</span><span>HSM</span><span>PKI · X.509</span><span>XAdES / PAdES</span><span>OAuth 2.0</span>
+        </div>
+      </div>
+      <div class="stack-col">
+        <h4>Craft</h4>
+        <div class="stack-list">
+          <span>Senior architecture</span><span>Bilingual (EN / HE)</span><span>Editorial docs</span><span>Code review</span><span>Incident response</span><span>Cost-aware AI</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =========================
+     WHY HIRE
+     ========================= -->
+<section class="section" id="why">
+  <div class="shell">
+    <div class="hire reveal">
+      <div class="hire-head">Ch. 06 · For hiring managers</div>
+      <h2 class="hire-title">Why engineering leaders bring me in <em>once — and don't let go</em>.</h2>
+
+      <ol class="hire-list">
+        <li><span class="num">01</span><span><b>One person, full arc.</b> I turn an RFC into architecture, code, infra, CI/CD, docs and on-call coverage — without spawning a four-person dependency chain.</span></li>
+        <li><span class="num">02</span><span><b>Security-aware by default.</b> I built my own enterprise scanner. Your code review is already happening at the threat-model layer, for free.</span></li>
+        <li><span class="num">03</span><span><b>AI that survives finance review.</b> Prompt caching, cost-aware orchestration, compliant subscription integrations. Not a demo — a line item your CFO can sign.</span></li>
+        <li><span class="num">04</span><span><b>Bilingual delivery.</b> Native Hebrew, fluent English. Ships English-first products and localized EN/HE docs at production grade in the same sprint.</span></li>
+        <li><span class="num">05</span><span><b>Non-negotiable rigor.</b> No mocks. No skipped tests. No silent failures. Verified in CI and in the browser before I call it done.</span></li>
+        <li><span class="num">06</span><span><b>Force-multiplies the team.</b> I build the tools your engineers didn't know they needed — Claude Code plugins, skills, hooks — so their next sprint is cheaper than this one.</span></li>
+        <li><span class="num">07</span><span><b>Domain depth in signing & PKI.</b> Years inside ComsignTrust's signing stack. If your product touches signatures, certificates, trust chains or regulation — I've already shipped there.</span></li>
+        <li><span class="num">08</span><span><b>Operates like an owner.</b> I run my own ops control plane in private — Postgres, pgvector, scheduled agents, lessons bank. I bring that operator mindset to whatever team adopts me.</span></li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<!-- =========================
+     CONTACT / CLOSE
+     ========================= -->
+<section class="close" id="contact">
+  <div class="shell">
+    <div class="close-kicker reveal">Ch. 07 · Make Contact</div>
+    <h2 class="close-title reveal">Let's <em>build</em> something real.</h2>
+    <p class="close-sub reveal">
+      If you're hiring senior engineers, architects, or tech leads — for AI platforms, security work, signing &amp; PKI,
+      or developer tooling — I'd like to talk. I take one or two engagements at a time. I take them seriously.
+    </p>
+
+    <div class="close-ctas reveal">
+      <a class="btn primary" href="mailto:galsened@gmail.com?subject=Let%27s%20build%20something%20real&body=Hi%20Gal%2C%0A%0A">
+        Open the conversation
+        <span class="arrow">↗</span>
+      </a>
+      <a class="btn" href="https://github.com/GalSened" target="_blank" rel="noopener">
+        See the code
+        <span class="arrow">→</span>
+      </a>
+    </div>
+
+    <div class="contact-row reveal">
+      <a href="mailto:galsened@gmail.com"><span class="lbl">Email</span><span>galsened@gmail.com</span></a>
+      <a href="https://github.com/GalSened" target="_blank" rel="noopener"><span class="lbl">GitHub</span><span>@GalSened</span></a>
+      <a href="https://galsened.github.io/claude-code-tutoring/" target="_blank" rel="noopener"><span class="lbl">Adjacent</span><span>Claude Code tutoring</span></a>
+    </div>
+  </div>
+
+  <div class="shell foot" style="margin-top:80px">
+    <span>© MMXXVI · Gal Sened</span>
+    <span class="mid">Set in Fraunces, Geist, JetBrains Mono</span>
+    <span class="end">Composed by hand · verified in prod</span>
+  </div>
+</section>
+
+<script>
+/* ==============================
+   Live clock (Jerusalem time)
+   ============================== */
+(function clock(){
+  var el = document.getElementById('clock');
+  if(!el) return;
+  function tick(){
+    try{
+      var now = new Date();
+      var fmt = new Intl.DateTimeFormat('en-GB', {
+        timeZone: 'Asia/Jerusalem',
+        hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false
+      });
+      el.textContent = fmt.format(now) + ' IL';
+    }catch(e){
+      el.textContent = new Date().toUTCString().slice(17, 25) + ' UTC';
+    }
+  }
+  tick();
+  setInterval(tick, 1000);
+})();
+
+/* ==============================
+   Scroll reveal (IntersectionObserver)
+   ============================== */
+(function reveal(){
+  var items = document.querySelectorAll('.reveal');
+  if(!('IntersectionObserver' in window)){
+    items.forEach(function(n){ n.classList.add('in'); });
+    return;
+  }
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){
+        e.target.classList.add('in');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+  items.forEach(function(n, i){
+    // subtle stagger on the very first-in-view items
+    n.style.transitionDelay = (Math.min(i, 6) * 60) + 'ms';
+    io.observe(n);
+  });
+})();
+
+/* ==============================
+   Hero entrance stagger
+   ============================== */
+(function heroStagger(){
+  var hero = document.querySelectorAll('.hero .reveal');
+  hero.forEach(function(n, i){
+    n.style.transitionDelay = (i * 90) + 'ms';
+    // trigger immediately on load
+    requestAnimationFrame(function(){ n.classList.add('in'); });
+  });
+})();
+</script>
+</body>
+</html>
