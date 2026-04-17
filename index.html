@@ -864,10 +864,10 @@ html.js-on .reveal.in{opacity:1;transform:translateY(0)}
         </h1>
 
         <p class="hero-sub reveal">
-          I'm <strong>Gal Sened</strong> — a senior engineer who designs, builds and operates real systems end to end:
-          <strong>AI platforms</strong>, <strong>security scanners</strong>, <strong>signing infrastructure</strong>, and the
-          <strong>developer tooling</strong> that keeps them honest. Architecture to code to infra to docs — one person,
-          many ships, zero mocks.
+          I'm <strong>Gal Sened</strong> — I design, build and operate systems that ship into <strong>regulated production</strong>:
+          enterprise <strong>AI platforms</strong> under compliance constraints, <strong>multi-engine security scanners</strong> with
+          AI-driven triage, <strong>signing &amp; PKI infrastructure</strong> on K3s, and the <strong>developer tooling</strong>
+          that compounds engineering leverage across a team. One owner, full arc, evidence-backed.
         </p>
 
         <div class="hero-ctas reveal">
@@ -914,11 +914,12 @@ html.js-on .reveal.in{opacity:1;transform:translateY(0)}
       </p>
     </div>
     <blockquote class="pullquote reveal">
-      A senior engineer isn't someone who writes more code.
-      It's someone who <b>owns the whole arc</b> —
-      from the architecture diagram to the failing prod alert at 03:00 —
-      and <b>returns with a shipped, verified fix</b>, not a slide deck.
-      <span class="roman">— that's the job. that's what I do.</span>
+      The work isn't writing code.
+      The work is holding an <b>end-to-end model of a regulated system</b> in your head —
+      compliance boundaries, trust chains, failure topologies, cost envelopes —
+      and from there, <b>choosing the one change</b> that ships the customer outcome
+      without collapsing any other axis.
+      <span class="roman">— everything else is typing.</span>
     </blockquote>
   </div>
 </section>
@@ -966,44 +967,44 @@ html.js-on .reveal.in{opacity:1;transform:translateY(0)}
     <div class="cap-grid reveal">
       <article class="cap">
         <div class="cap-head"><span class="cap-n">01</span><span class="cap-tag">Depth</span></div>
-        <h3 class="cap-name">AI engineering that <em>earns</em> its tokens.</h3>
-        <p class="cap-copy">Multi-agent systems, MCP servers, prompt caching, compliant subscription integration via subprocess patterns. I build with the Claude API and Anthropic SDK the way senior backend engineers build with Postgres — measured, cached, observable, cost-aware.</p>
-        <ul class="cap-list"><li>Claude API</li><li>MCP</li><li>Prompt caching</li><li>Multi-agent</li><li>RAG</li><li>Tool use</li></ul>
+        <h3 class="cap-name">AI engineering with <em>an economics spreadsheet</em>.</h3>
+        <p class="cap-copy">I treat tokens the way senior backend engineers treat queries: cached, budgeted, rate-limit-aware, and routed through the compliance boundary your procurement team will actually sign. Prompt caching for a 5× cost collapse, subscription-compliant <code>claude --print</code> subprocess pipelines, multi-agent topology chosen for the task shape — not because agents are fashionable.</p>
+        <ul class="cap-list"><li>Claude API</li><li>MCP authoring</li><li>Prompt caching</li><li>Subprocess compliance</li><li>Agent topology</li><li>RAG</li></ul>
       </article>
 
       <article class="cap">
         <div class="cap-head"><span class="cap-n">02</span><span class="cap-tag">Depth</span></div>
-        <h3 class="cap-name">Security that <em>actually finds</em> things.</h3>
-        <p class="cap-copy">Designed and shipped a multi-engine scanner orchestrating SAST, DAST, SBOM, IaC and pentest flows with AI-driven triage. Real ZAP findings with evidence, not dashboards full of noise. Fails loud — never <code>except: pass</code>.</p>
-        <ul class="cap-list"><li>SAST</li><li>DAST</li><li>SBOM</li><li>IaC scan</li><li>Pentest orch.</li><li>AI triage</li></ul>
+        <h3 class="cap-name">Security that finds <em>real findings</em>, not dashboards.</h3>
+        <p class="cap-copy">Architected a multi-engine scanner: SAST, DAST, SBOM, IaC, and pentest orchestration routed through AI-driven triage. 42 real ZAP findings with HTTP evidence on a single scan. Nuclei skipped intelligently for internal IPs (14s scans, not 40m). Coverage-gap logging as a first-class invariant so suppressed findings can never quietly ship.</p>
+        <ul class="cap-list"><li>SAST</li><li>DAST · ZAP · Nuclei</li><li>SBOM</li><li>IaC scan</li><li>Pentest orchestration</li><li>AI triage</li><li>XSW · PAdES / XAdES attacks</li></ul>
       </article>
 
       <article class="cap">
         <div class="cap-head"><span class="cap-n">03</span><span class="cap-tag">Breadth</span></div>
-        <h3 class="cap-name">Full-stack, from <em>bits to browsers</em>.</h3>
-        <p class="cap-copy">.NET/C# services, Python platforms, TypeScript/React apps, Astro sites with Pagefind, Angular in protected repos. UI that ships — not theatre. I've written production in every layer because every layer talks to the one above and below it.</p>
-        <ul class="cap-list"><li>.NET / C#</li><li>Python</li><li>TypeScript</li><li>React</li><li>Astro</li><li>Angular</li></ul>
+        <h3 class="cap-name">Production in <em>every layer</em> because every layer leaks into the next.</h3>
+        <p class="cap-copy">A UI bug is often an API contract bug wearing a costume. An API bug is often a database migration bug in disguise. I've shipped .NET services, Python platforms, React/Next.js/Astro frontends, and the CI/CD that connects them — because the cheapest fix for a cross-layer bug is knowing which layer to inspect first.</p>
+        <ul class="cap-list"><li>.NET / C#</li><li>Python</li><li>TypeScript</li><li>React · Next.js</li><li>Astro</li><li>Angular</li><li>Playwright</li></ul>
       </article>
 
       <article class="cap">
         <div class="cap-head"><span class="cap-n">04</span><span class="cap-tag">Ops</span></div>
-        <h3 class="cap-name">Platform & infra that <em>doesn't wake you</em>.</h3>
-        <p class="cap-copy">K3s and Kubernetes workloads, Docker everywhere, Postgres + pgvector, AWS (EC2, RDS, SSM, ACI), GitHub Actions CI/CD across 10+ repos. I built my own Ops Control Plane — the same rigor travels to your team.</p>
-        <ul class="cap-list"><li>K3s · K8s</li><li>Docker</li><li>Postgres</li><li>pgvector</li><li>AWS</li><li>GH Actions</li></ul>
+        <h3 class="cap-name">Infra that <em>fails the way I told it to</em>.</h3>
+        <p class="cap-copy">K3s workloads with explicit failure modes, Postgres with pgvector for semantic state, AWS under SSM because production shouldn't need a jumphost, CI/CD across a dozen repos with release policies chosen to match the team's risk appetite. I built my own Ops Control Plane — tasks, state, telemetry, semantic memory — because an operator who doesn't dog-food their own discipline isn't operating.</p>
+        <ul class="cap-list"><li>K3s · K8s</li><li>Docker Compose</li><li>Postgres · pgvector</li><li>AWS · SSM</li><li>GitHub Actions</li><li>Terraform</li><li>Timescale</li></ul>
       </article>
 
       <article class="cap">
         <div class="cap-head"><span class="cap-n">05</span><span class="cap-tag">Domain</span></div>
-        <h3 class="cap-name">Signing & PKI — <em>years-deep</em>.</h3>
-        <p class="cap-copy">Working inside ComsignTrust's digital signing stack: Core API, Certificate Manager, WCF signing paths, HSM integration, WeSign microservices on K3s. When your product touches signatures, regulation, or trust chains — I've been there.</p>
-        <ul class="cap-list"><li>PKI</li><li>HSM</li><li>XAdES / PAdES</li><li>Certificate mgmt</li><li>SOAP / REST</li></ul>
+        <h3 class="cap-name">Signing, PKI &amp; trust — <em>where "undefined behaviour" is a regulator</em>.</h3>
+        <p class="cap-copy">Years inside ComsignTrust's signing stack: Core API, Certificate Manager, WCF signing paths, HSM integration, WeSign microservices on K3s, XAdES/PAdES signature flows. I've researched 2026 DAST attack surfaces specific to signing stacks — XSW, SAML token wrapping, SOAP/.svc playbook, .NET-specific hardening. If your product's failure mode is a court case, this is the depth you need.</p>
+        <ul class="cap-list"><li>PKI · X.509</li><li>HSM · PKCS#11</li><li>XAdES / PAdES</li><li>XSW attacks</li><li>SOAP · WCF · .svc</li><li>Certificate lifecycle</li></ul>
       </article>
 
       <article class="cap">
         <div class="cap-head"><span class="cap-n">06</span><span class="cap-tag">Meta</span></div>
-        <h3 class="cap-name">Tooling the way <em>blacksmiths</em> do.</h3>
-        <p class="cap-copy">Custom Claude Code plugins, skills, hooks and agents — because the tools I ship to myself are tools I'd ship to a team. If your engineers spend time on toil, I find the right place to put a hook, a skill, or a subagent and remove it.</p>
-        <ul class="cap-list"><li>Claude Code plugins</li><li>Agent SDK</li><li>Skills</li><li>Hooks</li><li>MCP servers</li></ul>
+        <h3 class="cap-name">Tooling as <em>leverage compound interest</em>.</h3>
+        <p class="cap-copy">Every plugin, skill, hook and agent I ship for my own workflow is a tool your team will want next quarter. QA Forge — 6 skills, 4 agents, 1 hook. Custom Claude Code plugins that replace toil with invariants. A personal hook layer that blocks dangerous git operations before they happen. The goal isn't "AI-powered" — it's that this sprint's problems become next sprint's disappeared constraints.</p>
+        <ul class="cap-list"><li>Claude Code plugins</li><li>Agent SDK</li><li>Skills · Hooks</li><li>MCP servers</li><li>Pre-tool guards</li></ul>
       </article>
     </div>
   </div>
@@ -1179,47 +1180,59 @@ html.js-on .reveal.in{opacity:1;transform:translateY(0)}
   <div class="shell">
     <div class="section-head">
       <div>
-        <div class="section-num reveal"><span class="bar"></span>Ch. 04 · Method</div>
-        <h2 class="section-title reveal">Five rules I <em>actually</em> enforce.</h2>
+        <div class="section-num reveal"><span class="bar"></span>Ch. 04 · Operating Modes</div>
+        <h2 class="section-title reveal">How I <em>think</em> before I ship.</h2>
       </div>
-      <div class="section-sub reveal">Working principles, not slogans</div>
+      <div class="section-sub reveal">Not rules. Instincts, earned.</div>
     </div>
 
     <div class="method-grid reveal">
       <article class="method">
-        <div class="method-head"><b>RULE I</b><span>· senior-architect first</span></div>
-        <h3 class="method-title">Plan at the architecture level before writing a line.</h3>
-        <p class="method-copy">The first deliverable on any non-trivial task is a diagram and a build sequence — not a pull request. Code is the cheapest part; the expensive part is reversing a wrong blueprint six weeks in.</p>
+        <div class="method-head"><b>MODE I</b><span>· compliance as architecture</span></div>
+        <h3 class="method-title">A policy change is an architectural invariant.</h3>
+        <p class="method-copy">When Anthropic shifted its third-party-tool policy for subscription OAuth mid-project, I didn't escalate — I rerouted an entire AI analytics pipeline through a <code>claude --print</code> subprocess boundary. Regulatory, legal and platform constraints don't get notes in a ticket; they reshape the dependency graph until the invariant is load-bearing.</p>
       </article>
 
       <article class="method">
-        <div class="method-head"><b>RULE II</b><span>· real only</span></div>
-        <h3 class="method-title">Never mock. Always hit the real service.</h3>
-        <p class="method-copy">Mocks lie. A test that passes against a mock and fails against production is worse than no test. I wire against real APIs, real databases, real messaging — and I verify via MCP browser tools before declaring done.</p>
+        <div class="method-head"><b>MODE II</b><span>· cross-layer fault tracing</span></div>
+        <h3 class="method-title">"The deploy is silently failing" is never one bug.</h3>
+        <p class="method-copy">On the docs portal: a V2 Pagefind stack had been silently failing since the first migration PR because the <code>deploy.yml</code> verify step was still asserting a V1 Orama search-index artifact. Three backlogged deploys. I traced it from a customer symptom through the CI matrix, the build output, the workflow assertion and the PR that introduced the mismatch — fixed in one session, not a post-mortem.</p>
       </article>
 
       <article class="method">
-        <div class="method-head"><b>RULE III</b><span>· fail loud</span></div>
-        <h3 class="method-title">Silence ships false negatives to customers.</h3>
-        <p class="method-copy">No <code>except: pass</code>. No swallowed return-empty-list. Every suppressed error either raises, writes to <code>result.error</code>, or logs a <span class="mono">WARNING "COVERAGE GAP"</span>. Users deserve to know what's missing, not what's convenient.</p>
+        <div class="method-head"><b>MODE III</b><span>· coverage gaps as first-class signals</span></div>
+        <h3 class="method-title">Log the <em>absence</em> of the expected signal.</h3>
+        <p class="method-copy">Most engineers log errors. A senior engineer logs the silence. Every scanner code path that could plausibly suppress a finding either raises, writes <code>result.error</code>, or emits <span class="mono">WARNING "COVERAGE GAP"</span> — because an <code>except: pass</code> is the quietest way to ship false negatives to a security customer, and the costliest long-term breach of trust.</p>
       </article>
 
       <article class="method">
-        <div class="method-head"><b>RULE IV</b><span>· pass, fail, or delete</span></div>
-        <h3 class="method-title">A skipped test is a lie in the CI dashboard.</h3>
-        <p class="method-copy">Zero tolerance for <code>skip</code>, <code>xfail</code>, or "temporarily disabled". A test either passes, fails and gets fixed, or gets deleted. Green should mean green — anything else is trust debt compounding silently.</p>
+        <div class="method-head"><b>MODE IV</b><span>· agent topology discipline</span></div>
+        <h3 class="method-title">Parallelism multiplies value — or confusion.</h3>
+        <p class="method-copy">I decide agent shape deliberately. Three <em>independent</em> review agents on a scanner auth-bypass PR (code / security / architecture) produced a DOM-XSS catch, a coverage-gap logging gap, and a test-regression fix. But for a plan with goal-fidelity constraints I go sequential — researcher → planner → plan-checker → executor → verifier — because a parallel fan-out there just averages seven shallow reads.</p>
       </article>
 
       <article class="method">
-        <div class="method-head"><b>RULE V</b><span>· evidence before assertion</span></div>
-        <h3 class="method-title">"Done" is a claim. Claims require proof.</h3>
-        <p class="method-copy">I don't say "it works" — I run the command, read the output, screenshot the UI, and paste the evidence. Verification before completion is an iron law: green logs and a live URL, or the work isn't finished.</p>
+        <div class="method-head"><b>MODE V</b><span>· goal-backward verification</span></div>
+        <h3 class="method-title">Tasks complete ≠ goal delivered.</h3>
+        <p class="method-copy">Verification isn't running the test suite; it's proving the phase's <em>original goal</em> landed in the codebase. I read the goal, inspect the live system, trace the evidence, and only then declare done. Task-list green with a broken customer outcome is the most expensive kind of false success.</p>
       </article>
 
       <article class="method">
-        <div class="method-head"><b>RULE VI</b><span>· own the full arc</span></div>
-        <h3 class="method-title">Architecture → code → infra → docs → on-call.</h3>
-        <p class="method-copy">I don't throw work over a wall. If I shipped it, I can diagram it, deploy it, debug it at 03:00, and write the documentation a new hire can read on day one. That's what senior actually means.</p>
+        <div class="method-head"><b>MODE VI</b><span>· memory-backed self-improvement</span></div>
+        <h3 class="method-title">Never make the same mistake twice — architect it out.</h3>
+        <p class="method-copy">I operate a versioned lessons bank — 149 entries and still growing — with a correction protocol that fires on every mistake: fix, root-cause, record, scan for siblings. My tools consult it before every deploy, every API call, every "done" claim. Engineering isn't the avoidance of error — it's treating every error as a permanent entry in an indexed, cited corpus.</p>
+      </article>
+
+      <article class="method">
+        <div class="method-head"><b>MODE VII</b><span>· threat-modeling at RFC time</span></div>
+        <h3 class="method-title">Security lives at the whiteboard, not the audit.</h3>
+        <p class="method-copy">I build the scanner I run against my own code. That means when I review an architecture, the threat model is already live: an authenticated dashboard endpoint without scoped claims is a <code>DELETE</code> at the design review, not a CVE two releases later. The scanner's own report pipeline found two critical auth bypasses I'd shipped — because I run the tool on myself first.</p>
+      </article>
+
+      <article class="method">
+        <div class="method-head"><b>MODE VIII</b><span>· PKI-grade rigor, everywhere</span></div>
+        <h3 class="method-title">A signing system can't have "temporarily disabled" tests. So nothing does.</h3>
+        <p class="method-copy">Years inside regulated signing infrastructure — XAdES / PAdES, HSM flows, X.509 trust chains, Certificate Manager — set a baseline that travels. If a regulated system can't have silent failures, skipped tests, or mocked dependencies, neither can your recommendation engine or your internal dashboard. The standard is non-negotiable because the habit is.</p>
       </article>
     </div>
   </div>
@@ -1286,17 +1299,18 @@ html.js-on .reveal.in{opacity:1;transform:translateY(0)}
   <div class="shell">
     <div class="hire reveal">
       <div class="hire-head">Ch. 06 · For hiring managers</div>
-      <h2 class="hire-title">Why engineering leaders bring me in <em>once — and don't let go</em>.</h2>
+      <h2 class="hire-title">What you're actually buying <em>when you bring me in</em>.</h2>
 
       <ol class="hire-list">
-        <li><span class="num">01</span><span><b>One person, full arc.</b> I turn an RFC into architecture, code, infra, CI/CD, docs and on-call coverage — without spawning a four-person dependency chain.</span></li>
-        <li><span class="num">02</span><span><b>Security-aware by default.</b> I built my own enterprise scanner. Your code review is already happening at the threat-model layer, for free.</span></li>
-        <li><span class="num">03</span><span><b>AI that survives finance review.</b> Prompt caching, cost-aware orchestration, compliant subscription integrations. Not a demo — a line item your CFO can sign.</span></li>
-        <li><span class="num">04</span><span><b>Bilingual delivery.</b> Native Hebrew, fluent English. Ships English-first products and localized EN/HE docs at production grade in the same sprint.</span></li>
-        <li><span class="num">05</span><span><b>Non-negotiable rigor.</b> No mocks. No skipped tests. No silent failures. Verified in CI and in the browser before I call it done.</span></li>
-        <li><span class="num">06</span><span><b>Force-multiplies the team.</b> I build the tools your engineers didn't know they needed — Claude Code plugins, skills, hooks — so their next sprint is cheaper than this one.</span></li>
-        <li><span class="num">07</span><span><b>Domain depth in signing & PKI.</b> Years inside ComsignTrust's signing stack. If your product touches signatures, certificates, trust chains or regulation — I've already shipped there.</span></li>
-        <li><span class="num">08</span><span><b>Operates like an owner.</b> I run my own ops control plane in private — Postgres, pgvector, scheduled agents, lessons bank. I bring that operator mindset to whatever team adopts me.</span></li>
+        <li><span class="num">01</span><span><b>Architecture under novel constraints.</b> When Anthropic changed its third-party-tool policy for subscription OAuth mid-project, I rerouted a full AI analytics platform through a compliant subprocess boundary — without downtime and without escalating to leadership. That's the value: I recognise a constraint as an architectural invariant, and I re-plan around it.</span></li>
+        <li><span class="num">02</span><span><b>Cross-layer systems diagnosis.</b> A "silently failing deploy" is never one bug. I traced a docs-portal V2 deploy through three backlogged runs back to a <code>deploy.yml</code> verify step still asserting a V1 search-index artifact. One commit, three unblocks. That's the pattern I bring to whatever incident lands in your tracker.</span></li>
+        <li><span class="num">03</span><span><b>Security native, not security adjacent.</b> I operate my own enterprise multi-engine scanner with AI triage. The threat model is live before your code review starts. When I flag an auth-bypass in a PR, it's because I ran the scanner on my own code first and learned the class of failure.</span></li>
+        <li><span class="num">04</span><span><b>AI engineering at economic scale.</b> Prompt caching with measurable hit-rate, rate-limit-aware scheduling, subprocess compliance patterns, multi-agent topology chosen for the task. The difference between a demo and a line item your CFO signs is exactly this stack.</span></li>
+        <li><span class="num">05</span><span><b>Meta-tooling that compounds.</b> I ship plugins, skills, hooks and agents for my own workflow that your team will adopt next quarter. QA Forge, scanner plugins, repo-guard hooks, MCP servers. A sprint with me in it is cheaper than a sprint without — and the sprint after that is cheaper still.</span></li>
+        <li><span class="num">06</span><span><b>Goal-backward verification as a culture import.</b> I don't declare "done" from a green task list. I re-read the original goal, inspect the live system, and prove the customer outcome landed. That discipline becomes a team standard within a month.</span></li>
+        <li><span class="num">07</span><span><b>PKI and signing depth — the hard kind.</b> Production experience across XAdES/PAdES, HSM integrations, X.509 trust chains, XSW-class attack surfaces, and a 2026 DAST research baseline specific to signing stacks. If your product's failure mode has regulators or courts attached, this is the shortlist you wanted.</span></li>
+        <li><span class="num">08</span><span><b>Bilingual lockstep delivery.</b> English-first product and localized EN/עברית docs shipped under a single writing contract, in the same sprint. Not "we'll translate later" — a real information-architecture discipline that serves both markets from day one.</span></li>
+        <li><span class="num">09</span><span><b>Full-arc ownership without hand-offs.</b> RFC to architecture to code to infra to docs to the 03:00 alert. Ten engineers of cost, one engineer of coordination overhead. If you've paid for "senior" and received "competent", you already know why this matters.</span></li>
       </ol>
     </div>
   </div>
