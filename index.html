@@ -16,6 +16,14 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..900,0..100,0..1;1,9..144,300..900,0..100,0..1&family=JetBrains+Mono:ital,wght@0,300..700;1,300..700&family=Geist:wght@300..700&display=swap" rel="stylesheet" />
 
+<script>
+// Opt into enhanced-animation CSS as early as possible, synchronously,
+// to avoid any flash of visible-then-hidden content. If this script never
+// runs (disabled JS, network error), the .reveal CSS fallback keeps the
+// page fully visible by default — content-first is the invariant.
+if ('IntersectionObserver' in window) document.documentElement.classList.add('js-on');
+</script>
+
 <style>
 /* =========================================================
    The Architect's Ledger — Gal Sened portfolio
@@ -745,16 +753,20 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 
 /* ==============================
    Scroll reveal
+   Content-first: always visible by default.
+   Entrance animation only when JS upgrades <html> with .js-on
+   — so no-JS, slow-JS, or observer-failure still ship content.
    ============================== */
 .reveal{
-  opacity:0;transform:translateY(14px);
+  opacity:1;transform:none;
   transition: opacity .9s var(--ease), transform .9s var(--ease);
   will-change: opacity, transform;
 }
-.reveal.in{opacity:1;transform:translateY(0)}
+html.js-on .reveal{opacity:0;transform:translateY(14px)}
+html.js-on .reveal.in{opacity:1;transform:translateY(0)}
 
 @media (prefers-reduced-motion: reduce){
-  .reveal{opacity:1;transform:none;transition:none}
+  html.js-on .reveal,.reveal{opacity:1;transform:none;transition:none}
   .live-dot{animation:none}
 }
 
@@ -1306,13 +1318,14 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 
 /* ==============================
    Scroll reveal (IntersectionObserver)
+   Opt-in: page is already visible without JS; this layer only
+   adds the entrance animation when everything works.
    ============================== */
 (function reveal(){
+  if(!('IntersectionObserver' in window)) return; // keep default visible state
+  // js-on already set synchronously in <head>; this observer only fills in `.in`.
+
   var items = document.querySelectorAll('.reveal');
-  if(!('IntersectionObserver' in window)){
-    items.forEach(function(n){ n.classList.add('in'); });
-    return;
-  }
   var io = new IntersectionObserver(function(entries){
     entries.forEach(function(e){
       if(e.isIntersecting){
@@ -1320,12 +1333,17 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
         io.unobserve(e.target);
       }
     });
-  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+  }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
   items.forEach(function(n, i){
-    // subtle stagger on the very first-in-view items
     n.style.transitionDelay = (Math.min(i, 6) * 60) + 'ms';
     io.observe(n);
   });
+
+  // Safety net: after 2.5s, reveal everything regardless, so a stuck
+  // observer (headless screenshot, weird browser) never leaves content hidden.
+  setTimeout(function(){
+    items.forEach(function(n){ n.classList.add('in'); });
+  }, 2500);
 })();
 
 /* ==============================
