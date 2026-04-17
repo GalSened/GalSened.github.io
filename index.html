@@ -201,6 +201,42 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 .hero{
   padding-block: clamp(48px, 8vw, 140px) clamp(56px, 8vw, 120px);
   position:relative;
+  isolation:isolate;
+}
+.hero-bg{
+  position:absolute;inset:0;
+  z-index:0;
+  pointer-events:none;
+  overflow:hidden;
+}
+.hero-bg video,
+.hero-bg img.hero-poster{
+  position:absolute;inset:0;
+  width:100%;height:100%;
+  object-fit:cover;
+  filter: saturate(1.05) contrast(1.02);
+  opacity:0;
+  transition: opacity 1.6s var(--ease);
+}
+.hero-bg.is-playing video{opacity:.55}
+.hero-bg.is-playing img.hero-poster{opacity:0}
+.hero-bg img.hero-poster{opacity:.45}
+.hero-bg::before{
+  content:"";position:absolute;inset:0;
+  background:
+    radial-gradient(60% 85% at 30% 40%, rgba(10,11,13,.1), rgba(10,11,13,.75) 72%),
+    linear-gradient(180deg, rgba(10,11,13,.55) 0%, rgba(10,11,13,.78) 65%, var(--bg) 100%);
+  pointer-events:none;
+}
+.hero-bg::after{
+  content:"";position:absolute;inset:auto 0 -1px 0;height:180px;
+  background:linear-gradient(180deg, transparent, var(--bg));
+  pointer-events:none;
+}
+.hero .shell{position:relative;z-index:1}
+@media (prefers-reduced-motion: reduce){
+  .hero-bg video{display:none}
+  .hero-bg img.hero-poster{opacity:.4}
 }
 .hero-grid{
   display:grid;
@@ -806,6 +842,16 @@ html.js-on .reveal.in{opacity:1;transform:translateY(0)}
      HERO
      ========================= -->
 <section class="hero">
+  <div class="hero-bg" id="heroBg" aria-hidden="true">
+    <img class="hero-poster" src="assets/video/hero-poster.jpg" alt="" onerror="this.remove()" />
+    <video
+      id="heroVideo"
+      playsinline muted autoplay loop
+      preload="metadata"
+      poster="assets/video/hero-poster.jpg">
+      <source src="assets/video/hero-ledger.mp4" type="video/mp4" />
+    </video>
+  </div>
   <div class="shell">
     <div class="hero-grid">
       <div>
@@ -1344,6 +1390,28 @@ html.js-on .reveal.in{opacity:1;transform:translateY(0)}
   setTimeout(function(){
     items.forEach(function(n){ n.classList.add('in'); });
   }, 2500);
+})();
+
+/* ==============================
+   Hero video: fade in once it can play
+   Respects prefers-reduced-motion (CSS hides the video element).
+   Silent fallback: if the mp4 fails, the poster image stays.
+   ============================== */
+(function heroVideo(){
+  var v = document.getElementById('heroVideo');
+  var wrap = document.getElementById('heroBg');
+  if(!v || !wrap) return;
+  function mark(){ wrap.classList.add('is-playing'); }
+  v.addEventListener('playing', mark, { once:true });
+  v.addEventListener('loadeddata', function(){
+    // autoplay was called via attribute; just make sure we resume after pauses
+    var p = v.play();
+    if(p && p.catch) p.catch(function(){});
+  });
+  v.addEventListener('error', function(){
+    // mp4 missing / decode error — keep the poster-only state.
+    v.remove();
+  });
 })();
 
 /* ==============================
